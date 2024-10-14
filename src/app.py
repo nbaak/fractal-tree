@@ -12,7 +12,7 @@ def take_screenshot(surface):
     print(f"Screenshot saved as {filename}")
     
     
-def grow_tree(surface:pygame.surface.Surface, start:pygame.Vector2, radius:int, phi:int, beta:int, color:pygame.color.Color, depth:int=12) -> None:
+def grow_tree(surface:pygame.surface.Surface, start:pygame.Vector2, radius:int, phi:int, beta:int, color:pygame.color.Color, depth:int=12, color_decay:float=5.0) -> None:
     """
     Draws a fractal tree on the provided surface starting from a given point.
 
@@ -32,6 +32,8 @@ def grow_tree(surface:pygame.surface.Surface, start:pygame.Vector2, radius:int, 
         Color for the tree.
     depth: int
         The current recursion depth.
+    color_decay: float
+        The amount by what the color is reduced every turn
 
     Returns:
     --------
@@ -49,8 +51,8 @@ def grow_tree(surface:pygame.surface.Surface, start:pygame.Vector2, radius:int, 
     # change color
     h, s, v, a = color.hsva
     
-    v = min(100, (v - depth) % 100)
-    s = min(100, (s - depth) % 100)
+    v = min(100, (v - color_decay) % 100)
+    s = min(100, (s - color_decay) % 100)
     
     color = pygame.Color(0)
     color.hsva = (h, s, v, a)
@@ -78,9 +80,10 @@ def main():
     phi = 270
     beta = 20
     color = pygame.color.Color(0, 0, 255, 0)
-    max_depth = 13
+    max_depth = 15
+    color_decay = 100 / max_depth
     
-    grow_tree(surface, root, radius, phi, beta, color, max_depth)
+    grow_tree(surface, root, radius, phi, beta, color, max_depth, color_decay)
     
     # loop only to end the programm or take screenshots
     running = True
