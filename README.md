@@ -18,5 +18,5 @@ python3 ./app.py
 ```
 
 Shotcuts:
-Q: End the Programm
-SPACE: take a SCreenshot
+- Q: End the Programm
+- SPACE: take a SCreenshot
